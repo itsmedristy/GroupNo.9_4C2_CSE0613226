@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareHub | Buy • Rent • Share • Borrow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== HEADER: logo, search bar, wishlist, cart, sign in ===== -->
+<header class="header">
+  <a href="#" class="logo"><span>S</span>ShareHub</a>
+
+  <div class="searchBox">
+    <input id="searchInput" type="text" placeholder="Search products, categories, locations..." aria-label="Search products">
+    <button type="button" onclick="searchProducts()" aria-label="Search">🔍</button>
+  </div>
+
+  <nav class="nav">
+    <button class="navBtn" onclick="showWishlist()">♡ <span>Wishlist</span><b id="wishlistCount">0</b></button>
+    <button class="navBtn" onclick="openCart()">🛒 <span>Cart</span><b id="cartCount">0</b></button>
+    <button id="accountBtn" class="accountBtn" onclick="openModal('loginModal')">Sign In</button>
+<button id="registerBtn" class="accountBtn registerBtn" onclick="openModal('registerModal')">Register</button>
+</nav>
+</header>
+
+<!-- ===== HERO: main heading and action buttons ===== -->
+<section class="hero">
+  <div class="heroContent">
+    <div class="eyebrow"><span></span>COMMUNITY MARKETPLACE</div>
+    <h1>Buy what you need. <strong>Share what you have.</strong></h1>
+    <p>Buy it, rent it, borrow it, or get useful things for free from people near you.</p>
+    <div class="heroButtons">
+      <button class="primaryBtn" onclick="scrollToProducts()">Explore Marketplace</button>
+      <button class="outlineBtn" onclick="sellProduct()">+ List Your Item</button>
+    </div>
+    <!-- Demo numbers: replace with real data after launch -->
+    <div class="heroTrust">
+      <div><strong>4 ways</strong><span>Sell, Rent, Share, Borrow</span></div>
+      <div><strong>10</strong><span>Categories</span></div>
+      <div><strong>Demo</strong><span>Sample data</span></div>
+    </div>
+  </div>
+
+  <div class="heroVisual">
+    <div class="visualCircle circle1"></div>
+    <div class="visualCircle circle2"></div>
+    <div class="marketCard">
+      <div class="marketTop">
+        <div><small>MARKETPLACE</small><h3>Community activity</h3></div>
+        <span class="live">● Live</span>
+      </div>
+      <div class="activity">
+        <div class="activityLine"></div>
+        <div class="activityDot d1"></div><div class="activityDot d2"></div><div class="activityDot d3"></div>
+        <div class="activityDot d4"></div><div class="activityDot d5"></div>
+      </div>
+      <div class="marketNumbers">
+        <div><strong id="statListings">0</strong><small>Listings</small></div>
+        <div><strong id="statRent">0</strong><small>Rentals</small></div>
+        <div><strong id="statFree">0</strong><small>Free items</small></div>
+      </div>
+    </div>
+    <div class="floatingCard"><div class="check">✓</div><div><strong>Trusted Community</strong><small>Meet in public places</small></div></div>
+  </div>
+</section>
+
+<!-- ===== CATEGORIES: buttons filter the products (handled in script.js) ===== -->
+<section class="section categoriesSection">
+  <div class="sectionHeading"><div><small>EXPLORE</small><h2>Browse Categories</h2></div></div>
+  <div class="categories" id="categories">
+    <button class="active" data-cat="All">✨<span>All Products</span></button>
+    <button data-cat="Electronics">💻<span>Electronics</span></button>
+    <button data-cat="Fashion">👕<span>Fashion</span></button>
+    <button data-cat="Home">🏠<span>Home &amp; Living</span></button>
+    <button data-cat="Sports">⚽<span>Sports</span></button>
+    <button data-cat="Tools">🔧<span>Tools</span></button>
+    <button data-cat="Books">📚<span>Books</span></button>
+    <button data-cat="Gaming">🎮<span>Gaming</span></button>
+    <button data-cat="Camera">📷<span>Camera</span></button>
+    <button data-cat="Bicycle">🚲<span>Bicycle</span></button>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS: grid is filled by renderProducts() in script.js ===== -->
+<section class="productsSection" id="products">
+  <div class="sectionHeading productHeading">
+    <div>
+      <small>MARKETPLACE</small>
+      <h2 id="productHeading">Discover Products</h2>
+      <p id="resultText">Find something useful from your community.</p>
+    </div>
+    <select id="sortSelect" onchange="renderProducts()" aria-label="Sort products">
+      <option value="default">Sort by</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+    </select>
+  </div>
+  <div id="productsGrid" class="productsGrid"></div>
+  <div id="emptyState" class="emptyState">
+    <div>🔎</div><h3>No products found</h3><p>Try another search or category.</p>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="howSection">
+  <div class="centerHeading">
+    <small>HOW IT WORKS</small>
+    <h2>Everything made simple.</h2>
+    <p>Buy, rent, borrow or share products with your community.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><span>01</span><h3>Discover</h3><p>Search useful products near you.</p></div>
+    <div class="step"><span>02</span><h3>Choose</h3><p>Buy it, rent it, borrow it or take a free item.</p></div>
+    <div class="step"><span>03</span><h3>Connect</h3><p>Contact the owner on WhatsApp and complete your deal.</p></div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div>
+    <div class="footerLogo">ShareHub</div>
+    <p>A community marketplace for buying, renting, borrowing and sharing useful products.</p>
+  </div>
+  <div>
+    <h4>Marketplace</h4>
+    <a href="#products">Products</a>
+    <a href="#" onclick="sellProduct(); return false;">Sell an Item</a>
+    <a href="#" onclick="showWishlist(); return false;">Wishlist</a>
+  </div>
+  <div>
+    <h4>Community</h4>
+    <a href="#">About Us</a>
+    <a href="#">Safety</a>
+    <a href="#">Help Center</a>
+  </div>
+</footer>
+
+<!-- ===== LOGIN MODAL ===== -->
+<div class="modal" id="loginModal">
+  <div class="modalBox">
+    <button class="closeBtn" onclick="closeModal('loginModal')" aria-label="Close">×</button>
+    <div class="modalIcon">👋</div>
+    <h2>Welcome back</h2>
+    <p class="modalDescription">Sign in to continue to ShareHub.</p>
+    <form onsubmit="login(event)">
+      <label for="loginEmail">Email</label>
+      <input id="loginEmail" type="email" required>
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password" required>
+      <button type="submit" class="primaryBtn fullBtn">Sign In</button>
+    </form>
+    <p class="switchText">Don't have an account?
+      <button type="button" onclick="switchModal('loginModal','registerModal')">Create one</button>
+    </p>
+  </div>
+</div>
+
+<!-- ===== REGISTER MODAL ===== -->
+<div class="modal" id="registerModal">
+  <div class="modalBox">
+    <button class="closeBtn" onclick="closeModal('registerModal')" aria-label="Close">×</button>
+    <div class="modalIcon">🚀</div>
+    <h2>Create your account</h2>
+    <p class="modalDescription">Join the ShareHub community.</p>
+    <form onsubmit="register(event)">
+      <label for="regName">Full Name</label>
+      <input id="regName" required>
+      <label for="regEmail">Email</label>
+      <input id="regEmail" type="email" required>
+      <label for="regPassword">Password</label>
+      <input id="regPassword" type="password" minlength="6" required>
+      <label for="regConfirm">Confirm Password</label>
+      <input id="regConfirm" type="password" required>
+      <button type="submit" class="primaryBtn fullBtn">Create Account</button>
+    </form>
+    <p class="switchText">Already have an account?
+      <button type="button" onclick="switchModal('registerModal','loginModal')">Sign In</button>
+    </p>
+  </div>
+</div>
+
+<!-- ===== LIST PRODUCT MODAL: sell, rent, share (free) or borrow ===== -->
+<div class="modal" id="sellModal">
+  <div class="modalBox largeBox">
+    <button class="closeBtn" onclick="closeModal('sellModal')" aria-label="Close">×</button>
+    <div class="modalIcon">📦</div>
+    <h2>List your product</h2>
+    <p class="modalDescription">Sell it, rent it, share it for free or lend it.</p>
+    <form onsubmit="addProduct(event)">
+      <label for="productName">Product Name</label>
+      <input id="productName" placeholder="Example: Sony Headphones" required>
+
+      <label for="productCategory">Category</label>
+      <select id="productCategory" required>
+        <option value="">Choose category</option>
+        <option>Electronics</option><option>Fashion</option><option>Home</option><option>Sports</option><option>Tools</option>
+        <option>Books</option><option>Gaming</option><option>Camera</option><option>Bicycle</option>
+      </select>
+
+      <label for="productType">Listing Type</label>
+      <select id="productType" onchange="changeProductType()" required>
+        <option value="">Choose type</option>
+        <option value="Sell">For Sale</option>
+        <option value="Rent">For Rent</option>
+        <option value="Share">Share (Free)</option>
+        <option value="Borrow">Lend (Borrow)</option>
+      </select>
+
+      <div id="priceContainer">
+        <label for="productPrice">Price (৳)</label>
+        <input id="productPrice" type="number" min="1" placeholder="Enter price">
+      </div>
+
+      <div id="rentContainer" style="display:none">
+        <label for="rentPeriod">Rent Period</label>
+        <select id="rentPeriod"><option>Per Day</option><option>Per Week</option><option>Per Month</option></select>
+      </div>
+
+      <div id="borrowContainer" style="display:none">
+        <label for="borrowDays">Maximum borrow days</label>
+        <input id="borrowDays" type="number" min="1" max="90" value="7">
+      </div>
+
+      <label for="productImage">Product Image (max 5MB)</label>
+      <input id="productImage" type="file" accept="image/*" required>
+      <div id="imagePreview"></div>
+
+      <label for="productLocation">Location</label>
+      <input id="productLocation" placeholder="Example: Dhaka, Bangladesh" required>
+
+      <label for="productPhone">Phone / WhatsApp number</label>
+      <input id="productPhone" type="tel" placeholder="01XXXXXXXXX" required>
+
+      <label for="productDescription">Description</label>
+      <textarea id="productDescription" placeholder="Describe your product..." required></textarea>
+
+      <button type="submit" class="primaryBtn fullBtn">Publish Product</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== PRODUCT DETAILS MODAL ===== -->
+<div class="modal" id="detailsModal">
+  <div class="detailsBox">
+    <button class="closeBtn" onclick="closeModal('detailsModal')" aria-label="Close">×</button>
+    <div class="detailsImage"><img id="detailsImage" src="" alt=""></div>
+    <div class="detailsContent">
+      <div class="detailsCategory" id="detailsCategory"></div>
+      <h2 id="detailsName"></h2>
+      <div class="detailsRating">★ <span id="detailsRating"></span> <span>Listing rating</span></div>
+      <div class="detailsPrice" id="detailsPrice"></div>
+      <div class="detailsType" id="detailsType"></div>
+      <div class="detailInfo">
+        <div><span>📍</span><div><small>Location</small><strong id="detailsLocation"></strong></div></div>
+        <div><span>👤</span><div><small>Listed by</small><strong id="detailsOwner"></strong></div></div>
+      </div>
+      <div class="descriptionBox"><h4>Description</h4><p id="detailsDescription"></p></div>
+      <div class="detailsActions">
+        <button id="detailsWishlist" class="wishlistLarge" onclick="wishlistFromDetails()">♡ Add to Wishlist</button>
+        <button class="primaryBtn" onclick="cartFromDetails()">🛒 Add to Cart</button>
+        <button class="primaryBtn contactBtn" onclick="contactSeller()">💬 Contact Seller</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CART PANEL ===== -->
+<div id="cartOverlay" class="cartOverlay" onclick="closeCart()"></div>
+<aside id="cartPanel" class="cartPanel">
+  <div class="cartHeader">
+    <div><small>YOUR SHOPPING BAG</small><h2>Your Cart</h2></div>
+    <button onclick="closeCart()" aria-label="Close cart">×</button>
+  </div>
+  <div id="cartItems" class="cartItems"></div>
+  <div class="cartFooter">
+    <div class="cartTotal"><span>Total</span><strong id="cartTotal">৳0</strong></div>
+    <button class="primaryBtn fullBtn" onclick="checkout()">Continue to Checkout</button>
+  </div>
+</aside>
+
+<!-- ===== TOAST: short messages ===== -->
+<div id="toast" role="status"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
